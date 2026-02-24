@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADR, LLC — Rental Application</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --navy:    #1C2B3A;
+    --rust:    #C14B2A;
+    --rust-lt: #E8673D;
+    --tan:     #D4B896;
+    --warm-wht:#F7F3EE;
+    --ltgray:  #E8E3DC;
+    --midgray: #8A8078;
+    --dkgray:  #3D3530;
+    --green:   #2E7D4F;
+    --ff-display: 'Alfa Slab One', Georgia, serif;
+    --ff-body:    'Source Sans 3', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { background: var(--warm-wht); color: var(--dkgray); font-family: var(--ff-body); font-weight: 400; overflow-x: hidden; }
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: var(--ltgray); }
+  ::-webkit-scrollbar-thumb { background: var(--rust); }
+
+  /* ===== TOP BANNER ===== */
+  .top-banner { background: var(--navy); color: var(--tan); text-align: center; padding: 8px 24px; font-size: 12px; letter-spacing: 0.06em; font-weight: 600; text-transform: uppercase; }
+
+  /* ===== NAV ===== */
+  nav { background: var(--warm-wht); border-bottom: 3px solid var(--rust); display: flex; align-items: center; justify-content: space-between; padding: 16px 40px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
+  .nav-logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+  .nav-logo-block { background: var(--rust); color: white; font-family: var(--ff-display); font-size: 20px; padding: 6px 14px; letter-spacing: 0.04em; line-height: 1; }
+  .nav-logo-text { font-family: var(--ff-display); font-size: 18px; color: var(--navy); letter-spacing: 0.02em; line-height: 1.1; display: block; }
+  .nav-logo-sub { font-family: var(--ff-body); font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--midgray); }
+  .nav-links { display: flex; gap: 8px; list-style: none; }
+  .nav-links a { font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--dkgray); text-decoration: none; padding: 8px 14px; transition: background 0.2s, color 0.2s; }
+  .nav-links a:hover { background: var(--ltgray); color: var(--rust); }
+  .nav-cta { background: var(--rust); color: white; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 12px 24px; text-decoration: none; border: 2px solid var(--rust); transition: background 0.2s, border-color 0.2s; }
+  .nav-cta:hover { background: var(--navy); border-color: var(--navy); }
+
+  /* ===== PAGE HEADER ===== */
+  .page-header { background: var(--navy); padding: 48px 40px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; inset: 0; background-image: repeating-linear-gradient(-45deg, transparent, transparent 20px, rgba(255,255,255,0.015) 20px, rgba(255,255,255,0.015) 40px); pointer-events: none; }
+  .page-header-inner { position: relative; z-index: 1; }
+  .breadcrumb { font-size: 12px; color: rgba(255,255,255,0.45); margin-bottom: 12px; letter-spacing: 0.06em; }
+  .breadcrumb a { color: var(--tan); text-decoration: none; }
+  .breadcrumb a:hover { color: var(--rust-lt); }
+  .page-header h1 { font-family: var(--ff-display); font-size: clamp(28px, 3vw, 44px); color: white; line-height: 1.05; margin-bottom: 10px; }
+  .page-header p { font-size: 15px; color: rgba(255,255,255,0.6); max-width: 560px; line-height: 1.6; }
+
+  /* ===== MAIN LAYOUT ===== */
+  .application-wrap { max-width: 860px; margin: 0 auto; padding: 56px 40px 80px; }
+
+  /* ===== NOTICE BOX ===== */
+  .notice-box { background: white; border: 2px solid var(--tan); border-left: 5px solid var(--rust); padding: 20px 24px; margin-bottom: 40px; }
+  .notice-box p { font-size: 13px; color: var(--dkgray); line-height: 1.7; }
+  .notice-box strong { color: var(--navy); }
+
+  /* ===== FORM SECTIONS ===== */
+  .form-section { margin-bottom: 40px; }
+  .section-title { font-family: var(--ff-display); font-size: 20px; color: var(--navy); padding-bottom: 10px; border-bottom: 3px solid var(--rust); margin-bottom: 24px; display: flex; align-items: center; gap: 10px; }
+  .section-num { background: var(--rust); color: white; font-family: var(--ff-body); font-size: 12px; font-weight: 700; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+  /* ===== FORM FIELDS ===== */
+  .field-row { display: grid; gap: 16px; margin-bottom: 16px; }
+  .field-row.cols-2 { grid-template-columns: 1fr 1fr; }
+  .field-row.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .field-row.cols-1 { grid-template-columns: 1fr; }
+
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--navy); }
+  .field label .req { color: var(--rust); margin-left: 2px; }
+  .field input, .field select, .field textarea {
+    padding: 11px 14px; font-size: 14px; font-family: var(--ff-body);
+    border: 2px solid var(--ltgray); background: white; color: var(--dkgray);
+    outline: none; transition: border-color 0.2s; width: 100%;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--rust); }
+  .field input::placeholder, .field textarea::placeholder { color: var(--midgray); }
+  .field textarea { resize: vertical; min-height: 90px; }
+  .field select { cursor: pointer; }
+
+  /* ===== DIVIDER ===== */
+  .field-divider { border: none; border-top: 1px dashed var(--tan); margin: 24px 0; }
+
+  /* ===== CHECKBOX ===== */
+  .checkbox-wrap { display: flex; align-items: flex-start; gap: 12px; padding: 16px 20px; background: white; border: 2px solid var(--ltgray); margin-top: 8px; }
+  .checkbox-wrap input[type="checkbox"] { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--rust); cursor: pointer; flex-shrink: 0; }
+  .checkbox-wrap label { font-size: 13px; color: var(--dkgray); line-height: 1.6; cursor: pointer; }
+  .checkbox-wrap label strong { color: var(--navy); }
+
+  /* ===== SUBMIT ===== */
+  .submit-wrap { margin-top: 40px; padding-top: 32px; border-top: 2px solid var(--ltgray); }
+  .submit-btn { background: var(--rust); color: white; border: 2px solid var(--rust); font-family: var(--ff-display); font-size: 18px; letter-spacing: 0.04em; padding: 18px 48px; cursor: pointer; transition: background 0.2s, border-color 0.2s; display: block; width: 100%; text-align: center; }
+  .submit-btn:hover { background: var(--navy); border-color: var(--navy); }
+  .submit-note { font-size: 12px; color: var(--midgray); text-align: center; margin-top: 12px; line-height: 1.6; }
+
+  /* ===== SUCCESS MESSAGE ===== */
+  .success-msg { display: none; background: white; border: 3px solid var(--green); padding: 48px 40px; text-align: center; }
+  .success-msg .icon { font-size: 48px; margin-bottom: 16px; }
+  .success-msg h2 { font-family: var(--ff-display); font-size: 28px; color: var(--navy); margin-bottom: 10px; }
+  .success-msg p { font-size: 15px; color: var(--midgray); line-height: 1.6; }
+
+  /* ===== FOOTER ===== */
+  footer { background: var(--dkgray); padding: 40px 40px 28px; }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .footer-copy { font-size: 12px; color: rgba(255,255,255,0.35); }
+  .footer-brand { display: flex; align-items: center; gap: 10px; }
+  .footer-logo-block { background: var(--rust); color: white; font-family: var(--ff-display); font-size: 15px; padding: 4px 10px; }
+  .footer-brand-name { font-family: var(--ff-display); font-size: 16px; color: white; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .page-header { padding: 36px 20px; }
+    .application-wrap { padding: 36px 20px 60px; }
+    .field-row.cols-2, .field-row.cols-3 { grid-template-columns: 1fr; }
+    footer { padding: 32px 20px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BANNER -->
+<div class="top-banner">Now Accepting Applications</div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-block">ADR</div>
+    <div>
+      <span class="nav-logo-text">ADR, LLC</span>
+      <span class="nav-logo-sub">Home Rentals</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="listings.html">Listings</a></li>
+    <li><a href="index.html#why-us">About</a></li>
+    <li><a href="index.html#how">How It Works</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+  <a href="apply.html" class="nav-cta" style="background:var(--navy);border-color:var(--navy);">Rental Application</a>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="breadcrumb"><a href="index.html">Home</a> &rsaquo; Rental Application</div>
+    <h1>Rental Application</h1>
+    <p>Fill out the form below completely and honestly. We review every application and will be in touch within 2–3 business days.</p>
+  </div>
+</div>
+
+<!-- APPLICATION FORM -->
+<div class="application-wrap">
+
+  <div class="notice-box">
+    <p><strong>Before you apply:</strong> All fields marked with <span style="color:var(--rust);">*</span> are required. Please provide accurate information — falsified applications will be disqualified. By submitting this form you consent to a background and credit check.</p>
+  </div>
+
+  <form id="application-form" action="https://formspree.io/f/xvzbdkkd" method="POST">
+
+    <!-- Hidden field to identify this as a rental application -->
+    <input type="hidden" name="_subject" value="New Rental Application — ADR, LLC"/>
+    <input type="hidden" name="_replyto" value=""/>
+
+    <!-- SECTION 1: Personal Info -->
+    <div class="form-section">
+      <div class="section-title"><span class="section-num">1</span> Personal Information</div>
+
+      <div class="field-row cols-3">
+        <div class="field">
+          <label>First Name <span class="req">*</span></label>
+          <input type="text" name="first_name" required placeholder="John"/>
+        </div>
+        <div class="field">
+          <label>Middle Name</label>
+          <input type="text" name="middle_name" placeholder="(optional)"/>
+        </div>
+        <div class="field">
+          <label>Last Name <span class="req">*</span></label>
+          <input type="text" name="last_name" required placeholder="Smith"/>
+        </div>
+      </div>
+
+      <div class="field-row cols-3">
+        <div class="field">
+          <label>Date of Birth <span class="req">*</span></label>
+          <input type="date" name="dob" required/>
+        </div>
+        <div class="field">
+          <label>Phone Number <span class="req">*</span></label>
+          <input type="tel" name="phone" required placeholder="(555) 555-5555"/>
+        </div>
+        <div class="field">
+          <label>Email Address <span class="req">*</span></label>
+          <input type="email" name="email" required placeholder="you@email.com"/>
+        </div>
+      </div>
+
+      <div class="field-row cols-2">
+        <div class="field">
+          <label>Number of Occupants <span class="req">*</span></label>
+          <select name="occupants" required>
+            <option value="">Select...</option>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5+</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Do you have pets?</label>
+          <select name="pets">
+            <option value="No">No</option>
+            <option value="Yes - dog">Yes — Dog</option>
+            <option value="Yes - cat">Yes — Cat</option>
+            <option value="Yes - other">Yes — Other</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field-row cols-1">
+        <div class="field">
+          <label>Property Applying For</label>
+          <input type="text" name="property" placeholder="e.g. 625 N. Kansas Ave., Marceline, MO"/>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: Current Address -->
+    <div class="form-section">
+      <div class="section-title"><span class="section-num">2</span> Current Address</div>
+
+      <div class="field-row cols-1">
+        <div class="field">
+          <label>Street Address <span class="req">*</span></label>
+          <input type="text" name="current_address" required placeholder="123 Main St"/>
+        </div>
+      </div>
+      <div class="field-row cols-3">
+        <div class="field">
+          <label>City <span class="req">*</span></label>
+          <input type="text" name="current_city" required placeholder="City"/>
+        </div>
+        <div class="field">
+          <label>State <span class="req">*</span></label>
+          <input type="text" name="current_state" required placeholder="MO"/>
+        </div>
+        <div class="field">
+          <label>ZIP Code <span class="req">*</span></label>
+          <input type="text" name="current_zip" required placeholder="00000"/>
+        </div>
+      </div>
+      <div class="field-row cols-2">
+        <div class="field">
+          <label>How long at this address? <span class="req">*</span></label>
+          <input type="text" name="current_duration" required placeholder="e.g. 2 years"/>
+        </div>
+        <div class="field">
+          <label>Reason for leaving <span class="req">*</span></label>
+          <input type="text" name="leaving_reason" required placeholder="e.g. Moving closer to work"/>
+        </div>
+      </div>
+
+      <hr class="field-divider"/>
+
+      <p style="font-size:13px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--navy);margin-bottom:16px;">Previous Address (if less than 2 years at current)</p>
+
+      <div class="field-row cols-1">
+        <div class="field">
+          <label>Street Address</label>
+          <input type="text" name="prev_address" placeholder="123 Previous St"/>
+        </div>
+      </div>
+      <div class="field-row cols-3">
+        <div class="field">
+          <label>City</label>
+          <input type="text" name="prev_city" placeholder="City"/>
+        </div>
+        <div class="field">
+          <label>State</label>
+          <input type="text" name="prev_state" placeholder="MO"/>
+        </div>
+        <div class="field">
+          <label>ZIP Code</label>
+          <input type="text" name="prev_zip" placeholder="00000"/>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 3: Employment & Income -->
+    <div class="form-section">
+      <div class="section-title"><span class="section-num">3</span> Employment & Income</div>
+
+      <div class="field-row cols-2">
+        <div class="field">
+          <label>Employer Name <span class="req">*</span></label>
+          <input type="text" name="employer" required placeholder="ABC Company"/>
+        </div>
+        <div class="field">
+          <label>Job Title</label>
+          <input type="text" name="job_title" placeholder="e.g. Warehouse Associate"/>
+        </div>
+      </div>
+      <div class="field-row cols-3">
+        <div class="field">
+          <label>Employer Phone</label>
+          <input type="tel" name="employer_phone" placeholder="(555) 555-5555"/>
+        </div>
+        <div class="field">
+          <label>Length of Employment</label>
+          <input type="text" name="employment_length" placeholder="e.g. 3 years"/>
+        </div>
+        <div class="field">
+          <label>Monthly Gross Income <span class="req">*</span></label>
+          <input type="text" name="monthly_income" required placeholder="e.g. $2,400"/>
+        </div>
+      </div>
+
+      <div class="field-row cols-1">
+        <div class="field">
+          <label>Other Income Sources (if any)</label>
+          <input type="text" name="other_income" placeholder="e.g. SSI, child support, part-time work"/>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 4: References -->
+    <div class="form-section">
+      <div class="section-title"><span class="section-num">4</span> References</div>
+
+      <p style="font-size:13px;color:var(--midgray);margin-bottom:20px;">Please provide two personal or professional references — not family members.</p>
+
+      <div class="field-row cols-3">
+        <div class="field">
+          <label>Reference 1 — Name <span class="req">*</span></label>
+          <input type="text" name="ref1_name" required placeholder="Full Name"/>
+        </div>
+        <div class="field">
+          <label>Relationship</label>
+          <input type="text" name="ref1_relationship" placeholder="e.g. Coworker"/>
+        </div>
+        <div class="field">
+          <label>Phone Number <span class="req">*</span></label>
+          <input type="tel" name="ref1_phone" required placeholder="(555) 555-5555"/>
+        </div>
+      </div>
+
+      <hr class="field-divider"/>
+
+      <div class="field-row cols-3">
+        <div class="field">
+          <label>Reference 2 — Name</label>
+          <input type="text" name="ref2_name" placeholder="Full Name"/>
+        </div>
+        <div class="field">
+          <label>Relationship</label>
+          <input type="text" name="ref2_relationship" placeholder="e.g. Neighbor"/>
+        </div>
+        <div class="field">
+          <label>Phone Number</label>
+          <input type="tel" name="ref2_phone" placeholder="(555) 555-5555"/>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 5: Background Check Consent -->
+    <div class="form-section">
+      <div class="section-title"><span class="section-num">5</span> Background Check Consent</div>
+
+      <div class="checkbox-wrap">
+        <input type="checkbox" id="consent" name="background_consent" value="Yes" required/>
+        <label for="consent">I authorize <strong>ADR, LLC</strong> to conduct a background and credit check as part of this rental application. I understand this is a condition of consideration and certify that all information provided is true and accurate to the best of my knowledge.</label>
+      </div>
+
+      <div class="field-row cols-1" style="margin-top:16px;">
+        <div class="field">
+          <label>Additional Comments</label>
+          <textarea name="comments" placeholder="Anything else you'd like us to know?"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUBMIT -->
+    <div class="submit-wrap">
+      <button type="submit" class="submit-btn">Submit Application</button>
+      <p class="submit-note">By submitting this application you agree to a background check and certify all information is accurate.<br>We will contact you within 2–3 business days.</p>
+    </div>
+
+  </form>
+
+  <!-- SUCCESS MESSAGE -->
+  <div class="success-msg" id="success-msg">
+    <div class="icon">✅</div>
+    <h2>Application Received!</h2>
+    <p>Thank you for applying with ADR, LLC. We've received your application and will be in touch within 2–3 business days.<br><br>Questions? Call us at <strong>(555) 555-0192</strong>.</p>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-bottom">
+    <div class="footer-brand">
+      <div class="footer-logo-block">ADR</div>
+      <div class="footer-brand-name">ADR, LLC</div>
+    </div>
+    <div class="footer-copy">© 2025 ADR, LLC. All rights reserved. Equal Housing Opportunity 🏠</div>
+  </div>
+</footer>
+
+<script>
+  // Handle form submission via Formspree
+  const form = document.getElementById('application-form');
+  const successMsg = document.getElementById('success-msg');
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = form.querySelector('.submit-btn');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        form.style.display = 'none';
+        successMsg.style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        btn.textContent = 'Submit Application';
+        btn.disabled = false;
+        alert('Something went wrong. Please try again or call us directly.');
+      }
+    } catch (err) {
+      btn.textContent = 'Submit Application';
+      btn.disabled = false;
+      alert('Something went wrong. Please try again or call us directly.');
+    }
+  });
+</script>
+</body>
+</html>
