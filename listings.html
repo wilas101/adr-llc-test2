@@ -150,12 +150,19 @@
   .listing-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
   .listing-tag { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 8px; background: var(--ltgray); color: var(--slate); border: 1px solid var(--tan); color: var(--dkgray); }
   .listing-cta {
-    display: block; margin: 16px 22px 22px;
+    display: block; margin: 16px 22px 8px;
     background: var(--navy); color: white; text-align: center;
     font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
     padding: 12px; text-decoration: none; transition: background 0.2s;
   }
   .listing-cta:hover { background: var(--rust); }
+  .listing-apply {
+    display: block; margin: 0 22px 22px;
+    background: white; color: var(--rust); text-align: center;
+    font-size: 12px; font-weight: 600; border: 2px solid var(--rust);
+    padding: 10px; text-decoration: none; transition: background 0.2s, color 0.2s;
+  }
+  .listing-apply:hover { background: var(--rust); color: white; }
 
   /* ===== NO RESULTS ===== */
   .no-results { display: none; text-align: center; padding: 80px 40px; }
@@ -315,6 +322,7 @@
         <div class="listing-note">Short walk from downtown. Covered front porch, mature trees.</div>
       </div>
       <a href="#" class="listing-cta">Available</a>
+      <a href="apply.html" class="listing-apply">Interested? Fill out a rental application here</a>
     </div>
 
   </div>
