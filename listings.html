@@ -287,16 +287,7 @@
 <!-- RESULTS BAR -->
 <div class="results-bar">
   <div class="results-count">Showing <strong id="results-num">2</strong> homes</div>
-  <div class="sort-wrap">
-    <span class="sort-label">Sort:</span>
-    <select class="sort-select" id="sort-select" onchange="sortListings()">
-      <option value="default">Default</option>
-      <option value="price-asc">Price: Low to High</option>
-      <option value="price-desc">Price: High to Low</option>
-      <option value="beds-asc">Beds: Fewest First</option>
-      <option value="beds-desc">Beds: Most First</option>
-    </select>
-  </div>
+
 </div>
 
 <!-- LISTINGS GRID -->
@@ -373,42 +364,23 @@
         <div class="footer-logo-block">ADR</div>
         <div class="footer-brand-name">ADR, LLC</div>
       </div>
-      <p class="footer-tagline">"Decent homes at honest prices.<br>No frills, no games."</p>
+      <p class="footer-tagline"></p>
       <div class="footer-contact">
         <div>📞 <a href="tel:5125550192">(512) 555-0192</a></div>
-        <div>✉ <a href="/cdn-cgi/l/email-protection#026a676e6e6d426366706e6e612c616d6f"><span class="__cf_email__" data-cfemail="6c04090000032c0d081e00000f420f0301">[email&#160;protected]</span></a></div>
-        <div>📍 1428 Elmwood Ave, Austin, TX 78701</div>
-        <div>Mon–Fri 8am–6pm · Sat 9am–2pm</div>
+        <div>✉ <a href="/cdn-cgi/l/email-protection#3e4957525f4d0f0e0f7e59535f5752105d5153"><span class="__cf_email__" data-cfemail="0c7b65606d7f3d3c3d4c6b616d6560226f6361">[email&#160;protected]</span></a></div>
+        <div>📍 &lt;Address Pending&gt;</div>
+        <div>Mon–Fri 8am–6pm Central Time</div>
       </div>
     </div>
-    <div>
-      <div class="footer-col-title">Rentals</div>
-      <ul class="footer-links">
-        <li><a href="#">All Listings</a></li>
-        <li><a href="#">2-Bedroom Homes</a></li>
-        <li><a href="#">3-Bedroom Homes</a></li>
-        <li><a href="#">Pet-Friendly</a></li>
-        <li><a href="#">Section 8 OK</a></li>
-      </ul>
-    </div>
+
     <div>
       <div class="footer-col-title">Tenants</div>
       <ul class="footer-links">
         <li><a href="#">Apply Online</a></li>
-        <li><a href="#">Pay Rent</a></li>
+        <li><a href="pay-rent.html">Pay Rent</a></li>
         <li><a href="#">Request Repair</a></li>
         <li><a href="#">Lease Renewal</a></li>
         <li><a href="#">FAQ</a></li>
-      </ul>
-    </div>
-    <div>
-      <div class="footer-col-title">Company</div>
-      <ul class="footer-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="index.html#why-us">About ADR</a></li>
-        <li><a href="index.html#contact">Contact Us</a></li>
-        <li><a href="#">Privacy Policy</a></li>
-        <li><a href="#">Lease Terms</a></li>
       </ul>
     </div>
   </div>
@@ -422,7 +394,7 @@
   </div>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // Scroll reveal
   const reveals = document.querySelectorAll('.reveal');
   const obs = new IntersectionObserver(entries => {
@@ -453,29 +425,4 @@
       const show = matchSearch && matchBeds && matchPrice && matchStatus;
       card.style.display = show ? '' : 'none';
       if (show) visible++;
-    });
-
-    document.getElementById('results-num').textContent = visible;
-    document.getElementById('no-results').style.display = visible === 0 ? 'block' : 'none';
-  }
-
-  function sortListings() {
-    const val  = document.getElementById('sort-select').value;
-    const grid = document.getElementById('listings-grid');
-    const cards = Array.from(document.querySelectorAll('.listing-card'));
-
-    cards.sort((a, b) => {
-      const ap = parseInt(a.dataset.price), bp = parseInt(b.dataset.price);
-      const ab = parseInt(a.dataset.beds),  bb = parseInt(b.dataset.beds);
-      if (val === 'price-asc')  return ap - bp;
-      if (val === 'price-desc') return bp - ap;
-      if (val === 'beds-asc')   return ab - bb;
-      if (val === 'beds-desc')  return bb - ab;
-      return 0;
-    });
-
-    cards.forEach(c => grid.appendChild(c));
-  }
-
-  function clearFilters() {
-    document.getElementById('search-inpu
+ 
