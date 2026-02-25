@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADR, LLC — Current Tenant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --navy:    #1C2B3A;
+    --rust:    #C14B2A;
+    --rust-lt: #E8673D;
+    --tan:     #D4B896;
+    --warm-wht:#F7F3EE;
+    --ltgray:  #E8E3DC;
+    --midgray: #8A8078;
+    --dkgray:  #3D3530;
+    --green:   #2E7D4F;
+    --ff-display: 'Alfa Slab One', Georgia, serif;
+    --ff-body:    'Source Sans 3', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { background: #F7F3EE; color: #3D3530; font-family: var(--ff-body); font-weight: 400; overflow-x: hidden; }
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: var(--ltgray); }
+  ::-webkit-scrollbar-thumb { background: var(--rust); }
+
+  /* ===== TOP BANNER ===== */
+  .top-banner { background: var(--navy); color: var(--tan); text-align: center; padding: 8px 24px; font-size: 12px; letter-spacing: 0.06em; font-weight: 600; text-transform: uppercase; }
+
+  /* ===== NAV ===== */
+  nav { background: var(--warm-wht); border-bottom: 3px solid var(--rust); display: flex; align-items: center; justify-content: space-between; padding: 16px 40px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
+  .nav-logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+  .nav-logo-block { background: var(--rust); color: white; font-family: var(--ff-display); font-size: 20px; padding: 6px 14px; letter-spacing: 0.04em; line-height: 1; }
+  .nav-logo-text { font-family: var(--ff-display); font-size: 18px; color: var(--navy); letter-spacing: 0.02em; line-height: 1.1; display: block; }
+  .nav-logo-sub { font-family: var(--ff-body); font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--midgray); }
+  .nav-links { display: flex; gap: 8px; list-style: none; }
+  .nav-links a { font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--dkgray); text-decoration: none; padding: 8px 14px; transition: background 0.2s, color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { background: var(--ltgray); color: var(--rust); }
+  .nav-right { display: flex; gap: 10px; align-items: center; }
+  .nav-cta { background: #2E7D4F; color: white; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 12px 24px; text-decoration: none; border: 2px solid #2E7D4F; transition: background 0.2s, border-color 0.2s; }
+  .nav-cta:hover { background: var(--navy); border-color: var(--navy); }
+  .nav-tenant { background: var(--navy); color: white; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 12px 24px; text-decoration: none; border: 2px solid var(--navy); transition: background 0.2s, border-color 0.2s; }
+  .nav-tenant:hover { background: var(--rust); border-color: var(--rust); }
+
+  /* ===== PAGE HEADER ===== */
+  .page-header { background: var(--navy); padding: 48px 40px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; inset: 0; background-image: repeating-linear-gradient(-45deg, transparent, transparent 20px, rgba(255,255,255,0.015) 20px, rgba(255,255,255,0.015) 40px); pointer-events: none; }
+  .page-header-inner { position: relative; z-index: 1; }
+  .breadcrumb { font-size: 12px; color: rgba(255,255,255,0.45); margin-bottom: 12px; letter-spacing: 0.06em; }
+  .breadcrumb a { color: var(--tan); text-decoration: none; }
+  .page-header h1 { font-family: var(--ff-body); font-size: clamp(28px, 3vw, 44px); font-weight: 700; color: white; line-height: 1.05; margin-bottom: 10px; }
+  .page-header p { font-size: 15px; color: rgba(255,255,255,0.6); max-width: 560px; line-height: 1.6; }
+
+  /* ===== MAIN ===== */
+  .tenant-wrap { max-width: 780px; margin: 0 auto; padding: 64px 40px 80px; }
+
+  .tenant-intro { text-align: center; margin-bottom: 56px; }
+  .tenant-intro h2 { font-family: var(--ff-display); font-size: 26px; color: var(--navy); margin-bottom: 12px; }
+  .tenant-intro p { font-size: 15px; color: var(--midgray); line-height: 1.8; max-width: 480px; margin: 0 auto; }
+
+  /* ===== TENANT CARDS ===== */
+  .tenant-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+
+  .tenant-card { background: white; border: 2px solid var(--ltgray); padding: 40px 32px; text-align: center; text-decoration: none; transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s; display: block; }
+  .tenant-card:hover { border-color: var(--rust); box-shadow: 4px 4px 0 var(--rust); transform: translate(-2px, -2px); }
+  .tenant-card-icon { font-size: 48px; margin-bottom: 20px; }
+  .tenant-card-title { font-family: var(--ff-display); font-size: 22px; color: var(--navy); margin-bottom: 12px; }
+  .tenant-card-desc { font-size: 14px; color: var(--midgray); line-height: 1.7; margin-bottom: 24px; }
+  .tenant-card-btn { display: inline-block; background: var(--rust); color: white; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 12px 28px; border: 2px solid var(--rust); transition: background 0.2s; }
+  .tenant-card:hover .tenant-card-btn { background: var(--navy); border-color: var(--navy); }
+
+  /* ===== CONTACT NOTE ===== */
+  .contact-note { margin-top: 56px; background: white; border: 2px solid var(--ltgray); border-left: 5px solid var(--navy); padding: 24px 28px; text-align: center; }
+  .contact-note p { font-size: 14px; color: var(--dkgray); line-height: 1.8; }
+  .contact-note strong { color: var(--navy); }
+  .contact-note a { color: var(--rust); text-decoration: none; }
+
+  /* ===== FOOTER ===== */
+  footer { background: var(--dkgray); padding: 40px 40px 28px; }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr; gap: 48px; padding-bottom: 32px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 24px; }
+  .footer-brand-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .footer-logo-block { background: var(--rust); color: white; font-family: var(--ff-display); font-size: 18px; padding: 6px 12px; }
+  .footer-brand-name { font-family: var(--ff-display); font-size: 20px; color: white; }
+  .footer-contact { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 2; }
+  .footer-contact a { color: var(--tan); text-decoration: none; }
+  .footer-col-title { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rust-lt); margin-bottom: 20px; padding-bottom: 8px; border-bottom: 2px solid var(--rust); }
+  .footer-links { list-style: none; }
+  .footer-links li { margin-bottom: 10px; }
+  .footer-links a { font-size: 14px; color: rgba(255,255,255,0.55); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--tan); }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .footer-copy { font-size: 12px; color: rgba(255,255,255,0.35); }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .page-header { padding: 36px 20px; }
+    .tenant-wrap { padding: 40px 20px 60px; }
+    .tenant-grid { grid-template-columns: 1fr; }
+    footer { padding: 32px 20px 20px; }
+    .footer-top { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BANNER -->
+<div class="top-banner">Now Accepting Applications</div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-block">ADR</div>
+    <div>
+      <span class="nav-logo-text">ADR, LLC</span>
+      <span class="nav-logo-sub">Home Rentals</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="listings.html">Listings</a></li>
+    <li><a href="how-it-works.html">How It Works</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+    <li><a href="current-tenant.html">Current Tenant?</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="current-tenant.html" class="nav-tenant active">Current Tenant?</a>
+    <a href="pay-rent.html" class="nav-cta">Pay Your Rent</a>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="breadcrumb"><a href="index.html">Home</a> &rsaquo; Current Tenant</div>
+    <h1>Are You a Current Tenant?</h1>
+    <p>Everything you need to manage your rental — all in one place.</p>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="tenant-wrap">
+
+  <div class="tenant-intro">
+    <h2>What Can We Help You With?</h2>
+    <p>Select one of the options below to get started.</p>
+  </div>
+
+  <div class="tenant-grid">
+
+    <a href="pay-rent.html" class="tenant-card">
+      <div class="tenant-card-icon">💙</div>
+      <div class="tenant-card-title">Pay Your Rent</div>
+      <div class="tenant-card-desc">Make your monthly rent payment quickly and easily through Venmo. Rent is due on the 1st of each month.</div>
+      <div class="tenant-card-btn">Pay Now →</div>
+    </a>
+
+    <a href="repair-request.html" class="tenant-card">
+      <div class="tenant-card-icon">🔧</div>
+      <div class="tenant-card-title">Request a Repair</div>
+      <div class="tenant-card-desc">Something broken or not working right? Submit a repair request and we'll be in touch within 1–2 business days.</div>
+      <div class="tenant-card-btn">Submit Request →</div>
+    </a>
+
+  </div>
+
+  <div class="contact-note">
+    <p>Need something else? Call us at <strong>(555) 555-0192</strong> or email <a href="mailto:wilas101@gmail.com">wilas101@gmail.com</a>.<br>We're available <strong>Mon–Fri 8am–6pm Central Time</strong>.</p>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand-logo">
+        <div class="footer-logo-block">ADR</div>
+        <div class="footer-brand-name">ADR, LLC</div>
+      </div>
+      <div class="footer-contact">
+        <div>📞 <a href="tel:5555550192">(555) 555-0192</a></div>
+        <div>✉ <a href="mailto:wilas101@gmail.com">wilas101@gmail.com</a></div>
+        <div>📍 &lt;Address Pending&gt;</div>
+        <div>Mon–Fri 8am–6pm Central Time</div>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Tenants</div>
+      <ul class="footer-links">
+        <li><a href="pay-rent.html">Pay Rent</a></li>
+        <li><a href="repair-request.html">Request Repair</a></li>
+        <li><a href="#">Lease Renewal</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 ADR, LLC. All rights reserved. Equal Housing Opportunity 🏠</div>
+  </div>
+</footer>
+
+</body>
+</html>

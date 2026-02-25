@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADR, LLC — Repair Request</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --navy:    #1C2B3A;
+    --rust:    #C14B2A;
+    --rust-lt: #E8673D;
+    --tan:     #D4B896;
+    --warm-wht:#F7F3EE;
+    --ltgray:  #E8E3DC;
+    --midgray: #8A8078;
+    --dkgray:  #3D3530;
+    --green:   #2E7D4F;
+    --ff-display: 'Alfa Slab One', Georgia, serif;
+    --ff-body:    'Source Sans 3', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { background: #F7F3EE; color: #3D3530; font-family: var(--ff-body); font-weight: 400; overflow-x: hidden; }
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: var(--ltgray); }
+  ::-webkit-scrollbar-thumb { background: var(--rust); }
+
+  /* ===== TOP BANNER ===== */
+  .top-banner { background: var(--navy); color: var(--tan); text-align: center; padding: 8px 24px; font-size: 12px; letter-spacing: 0.06em; font-weight: 600; text-transform: uppercase; }
+
+  /* ===== NAV ===== */
+  nav { background: var(--warm-wht); border-bottom: 3px solid var(--rust); display: flex; align-items: center; justify-content: space-between; padding: 16px 40px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
+  .nav-logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+  .nav-logo-block { background: var(--rust); color: white; font-family: var(--ff-display); font-size: 20px; padding: 6px 14px; letter-spacing: 0.04em; line-height: 1; }
+  .nav-logo-text { font-family: var(--ff-display); font-size: 18px; color: var(--navy); letter-spacing: 0.02em; line-height: 1.1; display: block; }
+  .nav-logo-sub { font-family: var(--ff-body); font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--midgray); }
+  .nav-links { display: flex; gap: 8px; list-style: none; }
+  .nav-links a { font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--dkgray); text-decoration: none; padding: 8px 14px; transition: background 0.2s, color 0.2s; }
+  .nav-links a:hover { background: var(--ltgray); color: var(--rust); }
+  .nav-cta { background: #2E7D4F; color: white; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 12px 24px; text-decoration: none; border: 2px solid #2E7D4F; transition: background 0.2s, border-color 0.2s; }
+  .nav-cta:hover { background: var(--navy); border-color: var(--navy); }
+
+  /* ===== PAGE HEADER ===== */
+  .page-header { background: var(--navy); padding: 48px 40px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; inset: 0; background-image: repeating-linear-gradient(-45deg, transparent, transparent 20px, rgba(255,255,255,0.015) 20px, rgba(255,255,255,0.015) 40px); pointer-events: none; }
+  .page-header-inner { position: relative; z-index: 1; }
+  .breadcrumb { font-size: 12px; color: rgba(255,255,255,0.45); margin-bottom: 12px; letter-spacing: 0.06em; }
+  .breadcrumb a { color: var(--tan); text-decoration: none; }
+  .page-header h1 { font-family: var(--ff-body); font-size: clamp(28px, 3vw, 44px); font-weight: 700; color: white; line-height: 1.05; margin-bottom: 10px; }
+  .page-header p { font-size: 15px; color: rgba(255,255,255,0.6); max-width: 560px; line-height: 1.6; }
+
+  /* ===== MAIN ===== */
+  .repair-wrap { max-width: 860px; margin: 0 auto; padding: 56px 40px 80px; }
+
+  /* ===== EMERGENCY NOTICE ===== */
+  .emergency-box { background: #FFF0F0; border: 2px solid #C14B2A; border-left: 5px solid #C14B2A; padding: 20px 24px; margin-bottom: 40px; }
+  .emergency-box p { font-size: 13px; color: var(--dkgray); line-height: 1.8; }
+  .emergency-box strong { color: var(--rust); }
+
+  /* ===== URGENCY CARDS ===== */
+  .urgency-section { margin-bottom: 40px; }
+  .urgency-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--navy); margin-bottom: 12px; }
+  .urgency-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .urgency-card { border: 2px solid var(--ltgray); padding: 16px; cursor: pointer; transition: border-color 0.2s, background 0.2s; position: relative; }
+  .urgency-card input[type="radio"] { position: absolute; opacity: 0; width: 0; height: 0; }
+  .urgency-card.selected { border-color: var(--rust); background: white; }
+  .urgency-card:hover { border-color: var(--tan); }
+  .urgency-card-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+  .urgency-card-title .dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .dot-emergency { background: #C14B2A; }
+  .dot-urgent { background: #D4880A; }
+  .dot-routine { background: var(--green); }
+  .urgency-card-desc { font-size: 12px; color: var(--midgray); line-height: 1.6; }
+
+  /* ===== FORM SECTIONS ===== */
+  .form-section { margin-bottom: 40px; }
+  .section-title { font-family: var(--ff-display); font-size: 20px; color: var(--navy); padding-bottom: 10px; border-bottom: 3px solid var(--rust); margin-bottom: 24px; display: flex; align-items: center; gap: 10px; }
+  .section-num { background: var(--rust); color: white; font-family: var(--ff-body); font-size: 12px; font-weight: 700; width: 26px; height: 26px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+  /* ===== FORM FIELDS ===== */
+  .field-row { display: grid; gap: 16px; margin-bottom: 16px; }
+  .field-row.cols-2 { grid-template-columns: 1fr 1fr; }
+  .field-row.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .field-row.cols-1 { grid-template-columns: 1fr; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--navy); }
+  .field label .req { color: var(--rust); margin-left: 2px; }
+  .field input, .field select, .field textarea {
+    padding: 11px 14px; font-size: 14px; font-family: var(--ff-body);
+    border: 2px solid var(--ltgray); background: white; color: var(--dkgray);
+    outline: none; transition: border-color 0.2s; width: 100%;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--rust); }
+  .field input::placeholder, .field textarea::placeholder { color: var(--midgray); }
+  .field textarea { resize: vertical; min-height: 120px; }
+  .field select { cursor: pointer; }
+
+  /* ===== PHOTO UPLOAD ===== */
+  .photo-upload { border: 2px dashed var(--tan); padding: 32px; text-align: center; background: white; cursor: pointer; transition: border-color 0.2s; }
+  .photo-upload:hover { border-color: var(--rust); }
+  .photo-upload input { display: none; }
+  .photo-upload-icon { font-size: 32px; margin-bottom: 10px; }
+  .photo-upload-text { font-size: 14px; color: var(--midgray); line-height: 1.6; }
+  .photo-upload-text strong { color: var(--navy); }
+  .photo-preview { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+  .photo-thumb { width: 80px; height: 80px; object-fit: cover; border: 2px solid var(--ltgray); }
+
+  /* ===== SUBMIT ===== */
+  .submit-wrap { margin-top: 40px; padding-top: 32px; border-top: 2px solid var(--ltgray); }
+  .submit-btn { background: var(--rust); color: white; border: 2px solid var(--rust); font-family: var(--ff-display); font-size: 18px; letter-spacing: 0.04em; padding: 18px 48px; cursor: pointer; transition: background 0.2s, border-color 0.2s; display: block; width: 100%; text-align: center; }
+  .submit-btn:hover { background: var(--navy); border-color: var(--navy); }
+  .submit-note { font-size: 12px; color: var(--midgray); text-align: center; margin-top: 12px; line-height: 1.6; }
+
+  /* ===== SUCCESS MESSAGE ===== */
+  .success-msg { display: none; background: white; border: 3px solid var(--green); padding: 48px 40px; text-align: center; }
+  .success-msg .icon { font-size: 48px; margin-bottom: 16px; }
+  .success-msg h2 { font-family: var(--ff-display); font-size: 28px; color: var(--navy); margin-bottom: 10px; }
+  .success-msg p { font-size: 15px; color: var(--midgray); line-height: 1.6; }
+
+  /* ===== FOOTER ===== */
+  footer { background: var(--dkgray); padding: 40px 40px 28px; }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr; gap: 48px; padding-bottom: 32px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 24px; }
+  .footer-brand-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .footer-logo-block { background: var(--rust); color: white; font-family: var(--ff-display); font-size: 18px; padding: 6px 12px; }
+  .footer-brand-name { font-family: var(--ff-display); font-size: 20px; color: white; }
+  .footer-contact { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 2; }
+  .footer-contact a { color: var(--tan); text-decoration: none; }
+  .footer-col-title { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rust-lt); margin-bottom: 20px; padding-bottom: 8px; border-bottom: 2px solid var(--rust); }
+  .footer-links { list-style: none; }
+  .footer-links li { margin-bottom: 10px; }
+  .footer-links a { font-size: 14px; color: rgba(255,255,255,0.55); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--tan); }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .footer-copy { font-size: 12px; color: rgba(255,255,255,0.35); }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .page-header { padding: 36px 20px; }
+    .repair-wrap { padding: 36px 20px 60px; }
+    .urgency-grid { grid-template-columns: 1fr; }
+    .field-row.cols-2, .field-row.cols-3 { grid-template-columns: 1fr; }
+    footer { padding: 32px 20px 20px; }
+    .footer-top { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BANNER -->
+<div class="top-banner">Now Accepting Applications</div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-block">ADR</div>
+    <div>
+      <span class="nav-logo-text">ADR, LLC</span>
+      <span class="nav-logo-sub">Home Rentals</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="listings.html">Listings</a></li>
+    <li><a href="how-it-works.html">How It Works</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+    <li><a href="current-tenant.html">Current Tenant?</a></li>
+  </ul>
+  <a href="pay-rent.html" class="nav-cta" style="background:#2E7D4F;border-color:#2E7D4F;">Pay Your Rent</a>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="breadcrumb"><a href="index.html">Home</a> &rsaquo; Repair Request</div>
+    <h1>Submit a Repair Request</h1>
+    <p>Fill out the form below and we'll get back to you within 1–2 business days. For emergencies, please call us directly.</p>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="repair-wrap">
+
+  <!-- EMERGENCY NOTICE -->
+  <div class="emergency-box">
+    <p><strong>🚨 For life-threatening emergencies</strong> such as gas leaks, electrical fires, or flooding — do not use this form. Call <strong>(555) 555-0192</strong> immediately or dial 911.</p>
+  </div>
+
+  <form id="repair-form" action="https://formspree.io/f/xvzbdkkd" method="POST">
+    <input type="hidden" name="_subject" value="New Repair Request — ADR, LLC"/>
+
+    <!-- URGENCY -->
+    <div class="form-section">
+      <div class="section-title"><span class="section-num">1</span> How Urgent Is This?</div>
+      <div class="urgency-label">Select one <span style="color:var(--rust);">*</span></div>
+      <div class="urgency-grid">
+        <label class="urgency-card" id="card-emergency">
+          <input type="radio" name="urgency" value="Emergency" required onchange="selectUrgency('emergency')"/>
+          <div class="urgency-card-title"><span class="dot dot-emergency"></span> Emergency</div>
+          <div class="urgency-card-desc">No heat/AC, gas leak, flooding, no hot water, electrical hazard, broken locks</div>
+        </label>
+        <label class="urgency-card" id="card-urgent">
+          <input type="radio" name="urgency" value="Urgent" onchange="selectUrgency('urgent')"/>
+          <div class="urgency-card-title"><span class="dot dot-urgent"></span> Urgent</div>
+          <div class="urgency-card-desc">Leaking pipes, broken appliance, pest infestation, broken window</div>
+        </label>
+        <label class="urgency-card" id="card-routine">
+          <input type="radio" name="urgency" value="Routine" onchange="selectUrgency('routine')"/>
+          <div class="urgency-card-title"><span class="dot dot-routine"></span> Routine</div>
+          <div class="urgency-card-desc">Dripping faucet, cosmetic damage, broken light fixture, door/window sticking</div>
+        </label>
+      </div>
+    </div>
+
+    <!-- TENANT INFO -->
+    <div class="form-section">
+      <div class="section-title"><span class="section-num">2</span> Your Information</div>
+      <div class="field-row cols-2">
+        <div class="field">
+          <label>First Name <span class="req">*</span></label>
+          <input type="text" name="first_name" required placeholder="John"/>
+        </div>
+        <div class="field">
+          <label>Last Name <span class="req">*</span></label>
+          <input type="text" name="last_name" required placeholder="Smith"/>
+        </div>
+      </div>
+      <div class="field-row cols-2">
+        <div class="field">
+          <label>Phone Number <span class="req">*</span></label>
+          <input type="tel" name="phone" required placeholder="(555) 555-5555"/>
+        </div>
+        <div class="field">
+          <label>Email Address</label>
+          <input type="email" name="email" placeholder="you@email.com"/>
+        </div>
+      </div>
+      <div class="field-row cols-1">
+        <div class="field">
+          <label>Property Address <span class="req">*</span></label>
+          <input type="text" name="property_address" required placeholder="e.g. 625 N. Kansas Ave., Marceline, MO"/>
+        </div>
+      </div>
+      <div class="field-row cols-1">
+        <div class="field">
+          <label>Best Time to Contact <span class="req">*</span></label>
+          <select name="best_time" required>
+            <option value="">Select...</option>
+            <option>Morning (8am–12pm)</option>
+            <option>Afternoon (12pm–5pm)</option>
+            <option>Evening (5pm–7pm)</option>
+            <option>Anytime</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- REPAIR DETAILS -->
+    <div class="form-section">
+      <div class="section-title"><span class="section-num">3</span> Repair Details</div>
+      <div class="field-row cols-1">
+        <div class="field">
+          <label>Type of Repair Needed <span class="req">*</span></label>
+          <select name="repair_type" required>
+            <option value="">Select...</option>
+            <option>Plumbing</option>
+            <option>Electrical</option>
+            <option>Heating / AC</option>
+            <option>Appliance</option>
+            <option>Roof / Ceiling</option>
+            <option>Doors / Windows</option>
+            <option>Flooring</option>
+            <option>Pest / Rodent</option>
+            <option>Exterior / Yard</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-row cols-1">
+        <div class="field">
+          <label>Describe the Issue <span class="req">*</span></label>
+          <textarea name="description" required placeholder="Please describe the problem in as much detail as possible. When did it start? Is it getting worse?"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHOTO UPLOAD -->
+    <div class="form-section">
+      <div class="section-title"><span class="section-num">4</span> Photos (Optional)</div>
+      <p style="font-size:13px;color:var(--midgray);margin-bottom:16px;">A photo helps us understand the issue and come prepared. You can attach up to 3 photos.</p>
+      <div class="photo-upload" onclick="document.getElementById('photo-input').click()">
+        <input type="file" id="photo-input" name="photos" accept="image/*" multiple onchange="previewPhotos(event)"/>
+        <div class="photo-upload-icon">📷</div>
+        <div class="photo-upload-text"><strong>Click to upload photos</strong><br>JPG, PNG, or HEIC — up to 3 photos</div>
+        <div class="photo-preview" id="photo-preview"></div>
+      </div>
+    </div>
+
+    <!-- SUBMIT -->
+    <div class="submit-wrap">
+      <button type="submit" class="submit-btn">Submit Repair Request</button>
+      <p class="submit-note">We'll follow up within 1–2 business days. For emergencies call <strong>(555) 555-0192</strong>.</p>
+    </div>
+
+  </form>
+
+  <!-- SUCCESS -->
+  <div class="success-msg" id="success-msg">
+    <div class="icon">🔧</div>
+    <h2>Request Received!</h2>
+    <p>Thank you for submitting your repair request. We'll be in touch within 1–2 business days to schedule a time.<br><br>For urgent issues, call us directly at <strong>(555) 555-0192</strong>.</p>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand-logo">
+        <div class="footer-logo-block">ADR</div>
+        <div class="footer-brand-name">ADR, LLC</div>
+      </div>
+      <div class="footer-contact">
+        <div>📞 <a href="tel:5125550192">(555) 555-0192</a></div>
+        <div>✉ <a href="mailto:wilas101@gmail.com">wilas101@gmail.com</a></div>
+        <div>📍 &lt;Address Pending&gt;</div>
+        <div>Mon–Fri 8am–6pm Central Time</div>
+      </div>
+    </div>
+    <div>
+            <div class="footer-col-title">Tenants</div>
+      <ul class="footer-links">
+        <li><a href="pay-rent.html">Pay Rent</a></li>
+        <li><a href="repair-request.html">Request Repair</a></li>
+        <li><a href="#">Lease Renewal</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 ADR, LLC. All rights reserved. Equal Housing Opportunity 🏠</div>
+  </div>
+</footer>
+
+<script>
+  // Urgency card selection
+  function selectUrgency(level) {
+    document.querySelectorAll('.urgency-card').forEach(c => c.classList.remove('selected'));
+    document.getElementById('card-' + level).classList.add('selected');
+  }
+
+  // Photo preview
+  function previewPhotos(e) {
+    const preview = document.getElementById('photo-preview');
+    preview.innerHTML = '';
+    const files = Array.from(e.target.files).slice(0, 3);
+    files.forEach(file => {
+      const reader = new FileReader();
+      reader.onload = ev => {
+        const img = document.createElement('img');
+        img.src = ev.target.result;
+        img.className = 'photo-thumb';
+        preview.appendChild(img);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  // Form submission
+  const form = document.getElementById('repair-form');
+  const successMsg = document.getElementById('success-msg');
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = form.querySelector('.submit-btn');
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      });
+
+      if (response.ok) {
+        form.style.display = 'none';
+        successMsg.style.display = 'block';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        btn.textContent = 'Submit Repair Request';
+        btn.disabled = false;
+        alert('Something went wrong. Please try again or call us directly.');
+      }
+    } catch (err) {
+      btn.textContent = 'Submit Repair Request';
+      btn.disabled = false;
+      alert('Something went wrong. Please try again or call us directly.');
+    }
+  });
+</script>
+</body>
+</html>
