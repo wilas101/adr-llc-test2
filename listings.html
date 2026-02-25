@@ -259,31 +259,6 @@
   </div>
 </div>
 
-<!-- FILTERS -->
-<div class="filters-bar">
-  <span class="filter-label">Filter:</span>
-  <input class="filter-input" type="text" id="search-input" placeholder="City, zip, or neighborhood…" oninput="filterListings()"/>
-  <select class="filter-select" id="beds-filter" onchange="filterListings()">
-    <option value="">Any Beds</option>
-    <option value="1">1 Bedroom</option>
-    <option value="2">2 Bedrooms</option>
-    <option value="3">3 Bedrooms</option>
-    <option value="4">4+ Bedrooms</option>
-  </select>
-  <select class="filter-select" id="price-filter" onchange="filterListings()">
-    <option value="">Any Price</option>
-    <option value="1000">Under $1,000</option>
-    <option value="1500">Under $1,500</option>
-    <option value="2000">Under $2,000</option>
-  </select>
-  <select class="filter-select" id="status-filter" onchange="filterListings()">
-    <option value="">Any Status</option>
-    <option value="available">Available Now</option>
-    <option value="soon">Coming Soon</option>
-  </select>
-  <button class="filter-clear" onclick="clearFilters()">Clear Filters</button>
-</div>
-
 <!-- RESULTS BAR -->
 <div class="results-bar">
   <div class="results-count">Showing <strong id="results-num">2</strong> homes</div>
