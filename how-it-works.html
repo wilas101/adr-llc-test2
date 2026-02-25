@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADR, LLC — How It Works</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --navy:    #1C2B3A;
+    --rust:    #C14B2A;
+    --rust-lt: #E8673D;
+    --tan:     #D4B896;
+    --warm-wht:#F7F3EE;
+    --ltgray:  #E8E3DC;
+    --midgray: #8A8078;
+    --dkgray:  #3D3530;
+    --green:   #2E7D4F;
+    --ff-display: 'Alfa Slab One', Georgia, serif;
+    --ff-body:    'Source Sans 3', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { background: #F7F3EE; color: #3D3530; font-family: var(--ff-body); font-weight: 400; overflow-x: hidden; }
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: var(--ltgray); }
+  ::-webkit-scrollbar-thumb { background: var(--rust); }
+
+  /* ===== TOP BANNER ===== */
+  .top-banner { background: var(--navy); color: var(--tan); text-align: center; padding: 8px 24px; font-size: 12px; letter-spacing: 0.06em; font-weight: 600; text-transform: uppercase; }
+
+  /* ===== NAV ===== */
+  nav { background: var(--warm-wht); border-bottom: 3px solid var(--rust); display: flex; align-items: center; justify-content: space-between; padding: 16px 40px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
+  .nav-logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+  .nav-logo-block { background: var(--rust); color: white; font-family: var(--ff-display); font-size: 20px; padding: 6px 14px; letter-spacing: 0.04em; line-height: 1; }
+  .nav-logo-text { font-family: var(--ff-display); font-size: 18px; color: var(--navy); letter-spacing: 0.02em; line-height: 1.1; display: block; }
+  .nav-logo-sub { font-family: var(--ff-body); font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--midgray); }
+  .nav-links { display: flex; gap: 8px; list-style: none; }
+  .nav-links a { font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--dkgray); text-decoration: none; padding: 8px 14px; transition: background 0.2s, color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { background: var(--ltgray); color: var(--rust); }
+  .nav-cta { background: #2E7D4F; color: white; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 12px 24px; text-decoration: none; border: 2px solid #2E7D4F; transition: background 0.2s, border-color 0.2s; }
+  .nav-cta:hover { background: var(--navy); border-color: var(--navy); }
+
+  /* ===== PAGE HEADER ===== */
+  .page-header { background: var(--navy); padding: 48px 40px; position: relative; overflow: hidden; }
+  .page-header::before { content: ''; position: absolute; inset: 0; background-image: repeating-linear-gradient(-45deg, transparent, transparent 20px, rgba(255,255,255,0.015) 20px, rgba(255,255,255,0.015) 40px); pointer-events: none; }
+  .page-header-inner { position: relative; z-index: 1; }
+  .breadcrumb { font-size: 12px; color: rgba(255,255,255,0.45); margin-bottom: 12px; letter-spacing: 0.06em; }
+  .breadcrumb a { color: var(--tan); text-decoration: none; }
+  .breadcrumb a:hover { color: var(--rust-lt); }
+  .page-header h1 { font-family: var(--ff-body); font-size: clamp(28px, 3vw, 44px); font-weight: 700; color: white; line-height: 1.05; margin-bottom: 10px; }
+  .page-header p { font-size: 15px; color: rgba(255,255,255,0.6); max-width: 560px; line-height: 1.6; }
+
+  /* ===== MAIN ===== */
+  .hiw-wrap { max-width: 780px; margin: 0 auto; padding: 64px 40px 80px; }
+
+  /* ===== INTRO ===== */
+  .hiw-intro { text-align: center; margin-bottom: 64px; }
+  .hiw-intro h2 { font-family: var(--ff-display); font-size: 28px; color: var(--navy); margin-bottom: 14px; }
+  .hiw-intro p { font-size: 15px; color: var(--midgray); line-height: 1.8; max-width: 520px; margin: 0 auto; }
+
+  /* ===== STEPS ===== */
+  .steps { display: flex; flex-direction: column; gap: 0; }
+
+  .step-card { display: grid; grid-template-columns: 80px 1fr; gap: 0; position: relative; }
+  .step-card:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 39px;
+    top: 80px;
+    bottom: -1px;
+    width: 2px;
+    background: var(--ltgray);
+  }
+
+  .step-num-wrap { display: flex; flex-direction: column; align-items: center; padding-top: 4px; }
+  .step-circle {
+    width: 56px; height: 56px; background: var(--rust); color: white;
+    font-family: var(--ff-display); font-size: 22px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; z-index: 1; position: relative;
+  }
+
+  .step-body { padding: 0 0 56px 32px; }
+  .step-label { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rust); margin-bottom: 8px; }
+  .step-title { font-family: var(--ff-display); font-size: 24px; color: var(--navy); margin-bottom: 12px; line-height: 1.1; }
+  .step-desc { font-size: 15px; color: var(--dkgray); line-height: 1.8; margin-bottom: 16px; }
+  .step-note { background: var(--ltgray); border-left: 4px solid var(--tan); padding: 14px 18px; font-size: 13px; color: var(--midgray); line-height: 1.7; }
+  .step-note strong { color: var(--navy); }
+
+  /* ===== FAQ ===== */
+  .faq-section { margin-top: 64px; padding-top: 48px; border-top: 2px solid var(--ltgray); }
+  .faq-section h2 { font-family: var(--ff-display); font-size: 24px; color: var(--navy); margin-bottom: 32px; }
+  .faq-item { border-bottom: 1px solid var(--ltgray); padding: 20px 0; }
+  .faq-item:first-of-type { border-top: 1px solid var(--ltgray); }
+  .faq-q { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+  .faq-a { font-size: 14px; color: var(--midgray); line-height: 1.8; }
+
+  /* ===== CTA ===== */
+  .hiw-cta { background: var(--rust); padding: 48px 40px; text-align: center; margin-top: 64px; }
+  .hiw-cta h2 { font-family: var(--ff-display); font-size: 28px; color: white; margin-bottom: 10px; }
+  .hiw-cta p { font-size: 14px; color: rgba(255,255,255,0.8); margin-bottom: 28px; }
+  .hiw-cta-btn { display: inline-block; background: white; color: var(--rust); font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 14px 36px; text-decoration: none; border: 2px solid white; transition: background 0.2s, color 0.2s; }
+  .hiw-cta-btn:hover { background: var(--navy); color: white; border-color: var(--navy); }
+
+  /* ===== FOOTER ===== */
+  footer { background: var(--dkgray); padding: 40px 40px 28px; }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr; gap: 48px; padding-bottom: 32px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 24px; }
+  .footer-brand-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+  .footer-logo-block { background: var(--rust); color: white; font-family: var(--ff-display); font-size: 18px; padding: 6px 12px; }
+  .footer-brand-name { font-family: var(--ff-display); font-size: 20px; color: white; }
+  .footer-contact { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 2; }
+  .footer-contact a { color: var(--tan); text-decoration: none; }
+  .footer-col-title { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--rust-lt); margin-bottom: 20px; padding-bottom: 8px; border-bottom: 2px solid var(--rust); }
+  .footer-links { list-style: none; }
+  .footer-links li { margin-bottom: 10px; }
+  .footer-links a { font-size: 14px; color: rgba(255,255,255,0.55); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--tan); }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .footer-copy { font-size: 12px; color: rgba(255,255,255,0.35); }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .page-header { padding: 36px 20px; }
+    .hiw-wrap { padding: 40px 20px 60px; }
+    .step-card { grid-template-columns: 60px 1fr; }
+    .step-card:not(:last-child)::after { left: 29px; }
+    .step-circle { width: 46px; height: 46px; font-size: 18px; }
+    .hiw-cta { padding: 36px 20px; }
+    footer { padding: 36px 20px 24px; }
+    .footer-top { grid-template-columns: 1fr; gap: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BANNER -->
+<div class="top-banner">Now Accepting Applications</div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-block">ADR</div>
+    <div>
+      <span class="nav-logo-text">ADR, LLC</span>
+      <span class="nav-logo-sub">Home Rentals</span>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="listings.html">Listings</a></li>
+    <li><a href="how-it-works.html" class="active">How It Works</a></li>
+    <li><a href="index.html#why-us">About</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+  <a href="pay-rent.html" class="nav-cta" style="background:#2E7D4F;border-color:#2E7D4F;">Pay Your Rent</a>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="breadcrumb"><a href="index.html">Home</a> &rsaquo; How It Works</div>
+    <h1>How It Works</h1>
+    <p>Renting from ADR, LLC is straightforward. Here's exactly what to expect from application to move-in.</p>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="hiw-wrap">
+
+  <div class="hiw-intro">
+    <h2>Three Simple Steps</h2>
+    <p>No application fee. No runaround. Just fill out the form, we'll run a background check, and if everything looks good we'll get you into a lease.</p>
+  </div>
+
+  <!-- STEPS -->
+  <div class="steps">
+
+    <!-- STEP 1 -->
+    <div class="step-card">
+      <div class="step-num-wrap">
+        <div class="step-circle">1</div>
+      </div>
+      <div class="step-body">
+        <div class="step-label">Step One</div>
+        <div class="step-title">Submit a Rental Application</div>
+        <div class="step-desc">Fill out our rental application with your personal information, current address, employment details, and two references. The whole thing takes about 10 minutes and there is no application fee.</div>
+        <div class="step-note"><strong>No fee to apply.</strong> We don't charge anything to submit an application. If we can't get you into a home, you haven't lost a dime.</div>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step-card">
+      <div class="step-num-wrap">
+        <div class="step-circle">2</div>
+      </div>
+      <div class="step-body">
+        <div class="step-label">Step Two</div>
+        <div class="step-title">Background & Credit Check</div>
+        <div class="step-desc">Once we receive your application we'll run a standard background and credit check. We look at rental history, employment, and overall reliability — not just a credit score. We review every application personally and will contact you within 3–5 business days.</div>
+        <div class="step-note"><strong>We look at the full picture.</strong> A less-than-perfect credit score won't automatically disqualify you. We take rental history and steady income into account.</div>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step-card">
+      <div class="step-num-wrap">
+        <div class="step-circle">3</div>
+      </div>
+      <div class="step-body">
+        <div class="step-label">Step Three</div>
+        <div class="step-title">Sign the Lease & Move In</div>
+        <div class="step-desc">If you're approved, we'll go over the lease agreement together, answer any questions you have, and get everything signed. Once the lease is signed and the first month's rent and security deposit are received, you get your keys.</div>
+        <div class="step-note"><strong>No surprises in the lease.</strong> We keep it plain and straightforward. If something isn't clear, just ask — we're happy to walk through it with you.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FAQ -->
+  <div class="faq-section">
+    <h2>Common Questions</h2>
+
+    <div class="faq-item">
+      <div class="faq-q">Is there an application fee?</div>
+      <div class="faq-a">No. We do not charge an application fee. Applying costs you nothing.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">How long does approval take?</div>
+      <div class="faq-a">Typically 3–5 business days. We'll reach out by phone or email once a decision has been made.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">What do you look for in an applicant?</div>
+      <div class="faq-a">Steady income, a reasonable rental history, and honest answers on your application. We're not looking for perfect — just reliable.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Is a security deposit required?</div>
+      <div class="faq-a">Yes, a security deposit is required before move-in. The amount will be specified in the lease agreement for the property you're applying for.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Are pets allowed?</div>
+      <div class="faq-a">It depends on the property. Check the individual listing for pet policy details, or call us and we'll let you know.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">How do I pay rent each month?</div>
+      <div class="faq-a">Rent is paid through Venmo. Visit our <a href="pay-rent.html" style="color:var(--rust);">Pay Rent page</a> for instructions.</div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- CTA -->
+<div class="hiw-cta">
+  <h2>Ready to Apply?</h2>
+  <p>Browse our available listings and submit your application today — no fee required.</p>
+  <a href="apply.html" class="hiw-cta-btn">Start Your Application →</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand-logo">
+        <div class="footer-logo-block">ADR</div>
+        <div class="footer-brand-name">ADR, LLC</div>
+      </div>
+      <div class="footer-contact">
+        <div>📞 <a href="tel:5125550192">(555) 555-0192</a></div>
+        <div>✉ <a href="mailto:wilas101@gmail.com">wilas101@gmail.com</a></div>
+        <div>📍 &lt;Address Pending&gt;</div>
+        <div>Mon–Fri 8am–6pm Central Time</div>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Tenants</div>
+      <ul class="footer-links">
+        <li><a href="apply.html">Apply Online</a></li>
+        <li><a href="pay-rent.html">Pay Rent</a></li>
+        <li><a href="how-it-works.html">How It Works</a></li>
+        <li><a href="listings.html">View Listings</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 ADR, LLC. All rights reserved. Equal Housing Opportunity 🏠</div>
+  </div>
+</footer>
+
+</body>
+</html>
