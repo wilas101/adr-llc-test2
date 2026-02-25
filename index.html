@@ -169,8 +169,8 @@
     transition: border-color 0.2s; display: inline-block;
   }
   .btn-outline:hover { border-color: white; }
-  .hero-img-side { position: relative; overflow: hidden; }
-  .hero-img-side img { width: 100%; height: 100%; object-fit: cover; opacity: 0.72; filter: sepia(15%); }
+  .hero-img-side { position: relative; overflow: hidden; max-height: 340px; }
+  .hero-img-side img { width: 100%; height: 100%; max-height: 340px; object-fit: cover; opacity: 0.72; filter: sepia(15%); }
   .hero-img-side::after {
     content: ''; position: absolute; inset: 0;
     background: linear-gradient(to right, var(--navy) 0%, transparent 30%);
@@ -418,121 +418,6 @@
   </div>
 
 </section>
-
-<!-- WHY US -->
-<section class="why-us" id="why-us">
-  <div class="why-us-inner">
-    <div class="why-us-left">
-      <div class="section-label reveal">Why ADR?</div>
-      <h2 class="section-title reveal reveal-d1">We Keep It <span style="color:var(--rust-lt)">Straight With You</span></h2>
-      <div class="divider reveal reveal-d2"></div>
-      <p class="reveal reveal-d2">We're not a big property management company. We're a small, local operation that takes care of our houses and our tenants. No call centers, no runaround — you get a real person every time you call.</p>
-      <a href="#listings" class="btn-main reveal reveal-d3">See What's Available</a>
-    </div>
-    <div class="why-us-right reveal">
-      <div class="why-card">
-        <span class="why-card-icon">📞</span>
-        <div class="why-card-title">We Actually Pick Up</div>
-        <div class="why-card-text">Real people answer when you call. No ticket systems, no waiting days for a reply. We're local and we're reachable.</div>
-      </div>
-      <div class="why-card">
-        <span class="why-card-icon">🔧</span>
-        <div class="why-card-title">Repairs Get Done</div>
-        <div class="why-card-text">We fix things. Not always perfect, but we show up. Maintenance requests handled within 24–48 hours.</div>
-      </div>
-      <div class="why-card">
-        <span class="why-card-icon">💵</span>
-        <div class="why-card-title">No Surprise Fees</div>
-        <div class="why-card-text">The price you see is the price you pay. No admin fees, no application markups, no mystery charges at signing.</div>
-      </div>
-      <div class="why-card">
-        <span class="why-card-icon">🤝</span>
-        <div class="why-card-title">Fair to Good Tenants</div>
-        <div class="why-card-text">Renew your lease without a big rent hike. Long-term tenants are rewarded. We want people to stay, not churn.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section class="how" id="how">
-  <div class="how-header">
-    <div class="section-label reveal">Simple Process</div>
-    <h2 class="section-title reveal reveal-d1">How to Rent From Us</h2>
-    <div class="divider reveal reveal-d1"></div>
-  </div>
-  <div class="how-steps">
-    <div class="how-step reveal">
-      <div class="how-step-num">1</div>
-      <div class="how-step-title">Browse Listings</div>
-      <div class="how-step-text">Look through what we have online or give us a call. Tell us your needs and budget — we'll point you to what fits.</div>
-    </div>
-    <div class="how-step reveal reveal-d1">
-      <div class="how-step-num">2</div>
-      <div class="how-step-title">Come See It</div>
-      <div class="how-step-text">Schedule a walkthrough. No hard sell, no pressure. If you like it, great. If not, we'll find you something else.</div>
-    </div>
-    <div class="how-step reveal reveal-d2">
-      <div class="how-step-num">3</div>
-      <div class="how-step-title">Fill Out an App</div>
-      <div class="how-step-text">Basic application — income verification, background check, references. We process it within 2 business days.</div>
-    </div>
-    <div class="how-step reveal reveal-d3">
-      <div class="how-step-num">4</div>
-      <div class="how-step-title">Get Your Keys</div>
-      <div class="how-step-text">Sign your lease, put down first month + deposit, and you're in. We walk through the property with you on move-in day.</div>
-    </div>
-  </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section class="testimonials">
-  <div class="testimonials-header">
-    <div class="section-label reveal">Tenant Reviews</div>
-    <h2 class="section-title reveal reveal-d1">What Our Renters Say</h2>
-    <div class="divider reveal reveal-d2"></div>
-  </div>
-  <div class="testimonials-grid">
-    <div class="tcard reveal">
-      <div class="tcard-stars">★★★★★</div>
-      <p class="tcard-text">"Not a fancy place but it's clean, the heat works, and when my sink broke they had someone out the next morning. That's all I need. Been here 4 years."</p>
-      <div class="tcard-author">
-        <div class="tcard-avatar">D</div>
-        <div><div class="tcard-name">Dennis W.</div><div class="tcard-meta">Maple Street — Tenant since 2020</div></div>
-      </div>
-    </div>
-    <div class="tcard reveal reveal-d1">
-      <div class="tcard-stars">★★★★☆</div>
-      <p class="tcard-text">"Moved here from out of state, needed something quick and affordable. ADR found me a 2-bed in my budget in one week. No nonsense, good people."</p>
-      <div class="tcard-author">
-        <div class="tcard-avatar">R</div>
-        <div><div class="tcard-name">Rosa M.</div><div class="tcard-meta">Round Rock — Tenant since 2022</div></div>
-      </div>
-    </div>
-    <div class="tcard reveal reveal-d2">
-      <div class="tcard-stars">★★★★★</div>
-      <p class="tcard-text">"I've had landlords who ghosted me for months on repairs. ADR is nothing like that. They're responsive and treat you like a person, not just a check."</p>
-      <div class="tcard-author">
-        <div class="tcard-avatar">T</div>
-        <div><div class="tcard-name">Terrence B.</div><div class="tcard-meta">Cedar Park — Tenant since 2019</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ABOUT STRIP -->
-<div class="about-strip">
-  <div class="about-strip-left reveal">
-    <h2>A Small Company That Does Right By Its Tenants</h2>
-    <p>ADR, LLC has been renting homes in the Austin area since 2012. We own and manage every property ourselves — no middlemen, no third-party managers. When you have a problem, you're talking to the people who actually own the house.</p>
-  </div>
-  <div class="about-strip-right reveal reveal-d1">
-    <div class="about-num-block"><div class="about-num">150+</div><div class="about-num-label">Homes Owned</div></div>
-    <div class="about-num-block"><div class="about-num">12</div><div class="about-num-label">Years Operating</div></div>
-    <div class="about-num-block"><div class="about-num">$850</div><div class="about-num-label">Starting At</div></div>
-    <div class="about-num-block"><div class="about-num">2,400+</div><div class="about-num-label">Families Housed</div></div>
-  </div>
-</div>
 
 <!-- FOOTER -->
 <footer id="contact">
