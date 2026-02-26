@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ADR, LLC — Repair Request</title>
+<title>ADR — Repair Request</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -160,10 +160,6 @@
 <nav>
   <a href="index.html" class="nav-logo">
     <div class="nav-logo-block">ADR</div>
-    <div>
-      <span class="nav-logo-text">ADR, LLC</span>
-      <span class="nav-logo-sub">Home Rentals</span>
-    </div>
   </a>
   <ul class="nav-links">
     <li><a href="listings.html">Listings</a></li>
@@ -192,7 +188,7 @@
   </div>
 
   <form id="repair-form" action="https://formspree.io/f/xvzbdkkd" method="POST">
-    <input type="hidden" name="_subject" value="New Repair Request — ADR, LLC"/>
+    <input type="hidden" name="_subject" value="New Repair Request — ADR"/>
 
     <!-- URGENCY -->
     <div class="form-section">
@@ -324,11 +320,11 @@
     <div>
       <div class="footer-brand-logo">
         <div class="footer-logo-block">ADR</div>
-        <div class="footer-brand-name">ADR, LLC</div>
+        
       </div>
       <div class="footer-contact">
         <div>📞 <a href="tel:5125550192">(555) 555-0192</a></div>
-        <div>✉ <a href="mailto:wilas101@gmail.com">wilas101@gmail.com</a></div>
+        <div>✉ <a href="/cdn-cgi/l/email-protection#eb9c82878a98dadbdaab8c868a8287c5888486"><span class="__cf_email__" data-cfemail="ccbba5a0adbffdfcfd8caba1ada5a0e2afa3a1">[email&#160;protected]</span></a></div>
         <div>📍 &lt;Address Pending&gt;</div>
         <div>Mon–Fri 8am–6pm Central Time</div>
       </div>
@@ -343,11 +339,11 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-copy">© 2025 ADR, LLC. All rights reserved. Equal Housing Opportunity 🏠</div>
+    <div class="footer-copy">© 2025 ADR. All rights reserved. Equal Housing Opportunity 🏠</div>
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   // Urgency card selection
   function selectUrgency(level) {
     document.querySelectorAll('.urgency-card').forEach(c => c.classList.remove('selected'));
@@ -395,14 +391,4 @@
       } else {
         btn.textContent = 'Submit Repair Request';
         btn.disabled = false;
-        alert('Something went wrong. Please try again or call us directly.');
-      }
-    } catch (err) {
-      btn.textContent = 'Submit Repair Request';
-      btn.disabled = false;
-      alert('Something went wrong. Please try again or call us directly.');
-    }
-  });
-</script>
-</body>
-</html>
+        alert('Something went wrong. Please try again or
